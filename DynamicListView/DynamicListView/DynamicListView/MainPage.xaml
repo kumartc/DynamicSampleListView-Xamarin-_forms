@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DynamicListView"
+             x:Class="DynamicListView.MainPage">
+    <ContentPage.Content>
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <StackLayout
+                Margin="16"
+                Orientation="Vertical">
+                <Label Text="{Binding TotalPrice, StringFormat='Price: {0:C}'}"/>
+                <Label Text="{Binding TotalQuantity, StringFormat='Quantity: {0}'}"/>
+            </StackLayout>
+            <ListView 
+                Grid.Row="1"
+                ItemsSource="{Binding Items}"
+                HasUnevenRows="True"
+                CachingStrategy="RecycleElement">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ContentView BackgroundColor="#FFF">
+                                <StackLayout
+                                    Orientation="Vertical"
+                                    VerticalOptions="Fill"
+                                    HorizontalOptions="Fill">
+                                    <Label Text="{Binding Price, StringFormat='Price: {0:C}'}"/>
+                                    <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}"/>
+                                    <Stepper 
+                                        Increment="1"
+                                        Minimum="0"
+                                        Maximum="100"
+                                        Value="{Binding Quantity}"
+                                        ValueChanged="Stepper_ValueChanged"/>
+                                </StackLayout>
+                            </ContentView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button
+                Grid.Row="2"
+                Margin="8"
+                Text="Add Item"
+                Command="{Binding AddItemCommand}">
+            </Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
